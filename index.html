@@ -1,154 +1,149 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="RewardsApp.ico" type="image/x-icon">
-        <title>Rewards Tracker by Jacob</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="RewardsApp.ico" type="image/x-icon">
+  <title>Commendation Tracker — Ashford</title>
+  <style>
+    :root{
+      --bg:#eafaf7; /* very light teal */
+      --card:#d7f3ee; /* light green-teal */
+      --accent:#2fa68a; /* teal */
+      --accent-2:#1f8f76;
+      --muted:#6b6b6b;
+      --white:#ffffff;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:var(--bg);color:#063;}
+    .app{max-width:980px;margin:28px auto;padding:18px}
 
-        <style>
-            :root{
-                --bg:#eafaf7;
-                --card:#d7f3ee;
-                --accent:#2fa68a;
-                --accent-2:#1f8f76;
-                --muted:#6b6b6b;
-                --white:#ffffff;
-                font-family: Inter, system-ui, -apple-system 'Segoe UI', Roberto, 'Helvectica Neue', Arial;
-            }
+    /* Login */
+    .center{display:flex;align-items:center;justify-content:center}
+    .card{background:linear-gradient(180deg,var(--card),var(--white));border-radius:14px;box-shadow:0 6px 22px rgba(7,46,38,0.08);padding:22px}
 
-            *{box-sizing:border-box}
-            html,body{height:100%;margin:0;background:var(--bg);color:#063;}
-            .app{max-width:980px;margin:28px auto;padding:18px}
+    header{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+    header h1{font-size:20px;margin:0;color:var(--accent-2)}
+    header p{margin:0;color:var(--muted);font-size:13px}
 
-            /* login page */
-            .center{display:flex;align-items:center;justify-content:center}
-            .car{background:linear-gradient(180deg,var(--card),var(--white));border-radius:14px;box-shadow: 0 6px 22px rgba(7,46,38,0.08);padding:22px}
+    .login-box{max-width:420px;margin:34px auto}
+    label{display:block;font-size:13px;margin-bottom:8px;color:#0b5}
+    input[type=password], input[type=text], input[type=date], select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(8,60,50,0.08);background:#fff}
+    button{background:var(--accent);color:white;border:none;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer}
+    button.ghost{background:transparent;color:var(--accent);border:1px solid rgba(47,166,138,0.12)}
 
-            header{display:flex;align-items:center;gap:14px;margin-bottom:180px}
-            header h1{font-size:20px;margin:0;color:var(--accent-2)}
-            header p{margin:0;color:var(--muted);font-size:13px}
+    /* Dashboard */
+    .stats{display:flex;gap:14px;margin-bottom:16px}
+    .stat{flex:1;background:linear-gradient(180deg,#fff,rgba(255,255,255,0.9));padding:14px;border-radius:12px;text-align:center;box-shadow:0 4px 18px rgba(7,46,38,0.06)}
+    .stat h2{margin:0;font-size:28px;color:var(--accent-2)}
+    .stat p{margin:6px 0 0;color:var(--muted);font-size:13px}
 
-            .login-box{max-width:420px;margin:34px auto}
-            label{display:block;font-size:13px;margin-bottom:8px;color:#0b5}
-            input[type=password], input[type=text], input[type=date], select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(8,60,50,0.08);background:#fff}
-            button{background:var(--accent);color:white;border:none;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer}
-            button.ghost{background:transparent;color:var(--accent);border:1px solid rgba(47,166,138,0.12)}
+    .controls{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
+    .controls .left{display:flex;gap:10px}
 
-            /* my amazing, awesome and incredibubble dashboard */
-            .stats{display:flex;gap:14px;margin-bottom:16px}
-            .stat{flex:1;background:linear-gradient(180deg,#fff,rgba(255,255,2550.9));padding:14px;border-radius:12px;text-align:center;box-shadow0 4px 18 px rgba(7,46,38,0.06)}
-            .stat h2{margin:0;font-size:28px;color:var(--accent-2)}
-            .stat p{margin:6px 0 0;color:var(--muted);font-size:13px}
+    .log{background:linear-gradient(180deg,var(--card),var(--white));padding:8px;border-radius:10px}
+    .log-row{display:grid;grid-template-columns:40px 1fr 120px 120px 80px;gap:8px;align-items:center;padding:10px;border-radius:8px}
+    .log-row:not(:last-child){border-bottom:1px dashed rgba(15,70,60,0.05)}
+    .num{font-weight:700;color:var(--accent-2)}
+    .meta{font-size:14px}
+    .meta .small{display:block;font-size:12px;color:var(--muted)}
+    .tag{padding:6px 8px;border-radius:8px;font-weight:600}
+    .tag.given{background:rgba(47,166,138,0.12);color:var(--accent-2)}
+    .tag.wait{background:rgba(255,201,93,0.12);color:#b36a00}
 
-            .controls{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}
-            .controls .left{display:flex;gap:10px}
+    .actions{display:flex;gap:8px}
+    .actions button{padding:6px 8px;border-radius:8px;font-weight:600}
+    .actions .danger{background:#ff6b6b}
+    .small-btn{background:transparent;border:1px solid rgba(7,46,38,0.06);padding:6px 8px;border-radius:8px}
 
-            .log{background:linear-gradient(180deg,var(--card),var(--white));padding:80px;border-radius:10px}
-            .log-row{display:grid;grid-template-columns:40px 1fr 120px 80px;gap:8px;align-items:center;padding:10px;border-radius:8px}
-            .log-row:not(:last-child){border-bottom:1px dashed rgba(15,70,60,0.05)}
-            .num{font-weight:700;color:var(--accent-2)}
-            .meta{font-size:14px}
-            .meta .small{display:block;font-size:12px;color:var(--muted)}
-            .tag{padding:6px 8px;border-radius:8px;font-weight:600}
-            .tag.given{background:rgba(47,166,138,0.12);color:var(--accent-2)}
-            .tag.wait{background:rgba(255,201,93,0.12);color:#b36a00}
+    footer{margin-top:14px;text-align:right;color:var(--muted);font-size:13px}
 
-            .actions{display:flex;gap:8px}
-            .actions button{padding:6px 8px;border-radius:8px;font-weight:600}
-            .actions .danger{background:#ff6b6b}
-            .small-btn{background:transparent;border:1px solid rgba(7,46,38,0.06);padding:6px 8px;border-radius:8px}
+    /* Modal */
+    .modal-back{position:fixed;inset:0;background:rgba(4,20,18,0.4);display:flex;align-items:center;justify-content:center}
+    .modal{width:420px;max-width:94%;}
 
-            footer{margin-top:14px;text-align:right;color:var(--muted);font-size:13px}
+    @media (max-width:760px){
+      .log-row{grid-template-columns:36px 1fr 100px 100px 72px}
+      .stats{flex-direction:column}
+      header{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="card">
+      <header>
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="6" fill="url(#g)"/><path d="M7 12h10M7 8h6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/></svg>
+        <div>
+          <h1>Commendation Tracker</h1>
+          <p>Simple, local and private — saves locally on this device.</p>
+        </div>
+      </header>
 
-            /* modal ... yayayayayayyayayayayayayy qwiehiqwehriqwehriw */
-            .modal-back{position:fixed;inset:0;background:rgba(4,20,18,0.4);display:flex;align-items:center;justify-content:center}
-            .modal{width:420px;max-width:94%}
+      <!-- LOGIN -->
+      <div id="login" class="login-box">
+        <div class="center">
+          <div class="card" style="width:100%;max-width:460px">
+            <h2 style="margin:0;color:var(--accent-2)">Sign in</h2>
+            <p style="margin:6px 0 14px;color:var(--muted)">Enter the single password to open the tracker.</p>
+            <label for="pwd">Password</label>
+            <input id="pwd" type="password" placeholder="Enter password" autocomplete="off" />
+            <div style="height:12px"></div>
+            <div style="display:flex;gap:8px;justify-content:space-between;align-items:center">
+              <button id="loginBtn">Unlock</button>
+              <button id="showHint" class="ghost">Hint</button>
+            </div>
+            <p id="loginErr" style="color:#c0392b;margin-top:10px;display:none">Wrong password</p>
+          </div>
+        </div>
+      </div>
 
-            @media (max-width:760px){
-                .log-row{grid-template-columns:36px 1fr 100px 100px 72px}
-                .stats{flex-direction:column}
-                header{flex-direction:column;align-items:flex-start}
-            }
-        </style>
-    </head>
+      <!-- DASHBOARD -->
+      <div id="dashboard" style="display:none">
+        <div class="stats">
+          <div class="stat">
+            <p style="margin:0;color:var(--muted);font-size:13px">Current given</p>
+            <h2 id="countGiven">0</h2>
+            <p class="small">Number of commendations marked as <strong>Given</strong></p>
+          </div>
+          <div class="stat">
+            <p style="margin:0;color:var(--muted);font-size:13px">Waiting</p>
+            <h2 id="countWaiting">0</h2>
+            <p class="small">How many are currently <strong>Waiting</strong></p>
+          </div>
+          <div class="stat">
+            <p style="margin:0;color:var(--muted);font-size:13px">Estimated total</p>
+            <h2 id="countEstimate">0</h2>
+            <p class="small">Given + Waiting (estimate)</p>
+          </div>
+        </div>
 
-    <!-- ahhhh finaly some actualy html stuff that i know... -->
+        <div class="controls">
+          <div class="left">
+            <button id="addBtn">+ Add commendation</button>
+            <button id="exportBtn" class="ghost">Export JSON</button>
+            <button id="importBtn" class="ghost">Import JSON</button>
+          </div>
+          <div class="right">
+            <button id="logoutBtn" class="ghost">Log out</button>
+          </div>
+        </div>
 
-    <body>
-        <div class="app">
-            <div class="card">
-                <header>
-                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="6" fill="url(#g)"/><path d="M7 12h10M7 8h6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/></svg>
-                    <div>
-                        <h1>Commendation Tracker</h1>
-                        <p>Simple, local and private — saves locally on this device.</p>
-                    </div>
-                </header>
+        <div class="log" id="log">
+          <!-- header row -->
+          <div class="log-row" style="font-weight:700;color:var(--muted);padding:10px;">
+            <div>#</div>
+            <div>Details</div>
+            <div>Date</div>
+            <div>Teacher</div>
+            <div style="text-align:right">Actions</div>
+          </div>
+          <div id="rows"></div>
+        </div>
 
-                <!-- login time - dooo doo dodooo dooooo dood dod odod -->
-                 <div id="login" class="login-box">
-                    <div class="center">
-                        <div class="card" style="width:100%;max-width:460px">
-                            <h2 style="margin:6px 0 14px;color:var(--muted)">Enter the password to open your AMAZING tracker.</h2>
-                            <label for="pwd">Password</label>
-                            <input id="pwd" type="password" placeholder="Enter password" autocomplete="off" />
-                            <div style="height:12px"></div>
-                            <div style="display:flex;gap:8px;justify-content:space-between;align-items:center">
-                                <button id="loginBtn">Unlock</button>
-                                <button id="showHint" class="ghost">Show Hint</button>
-                            </div>
-                            <p id="loginErr" style="color:#c0392b;margin-top:10px;display:none">Wrong Password</p>
-                        </div>
-                    </div>
-                 </div>
-                
-                <!-- dashboard time - wooohooo -->
-                 <div id="dashboard" style="display:none">
-                    <div class="stats">
-                        <div class="stat">
-                            <p style="margin:0;color:var(--muted);font-size:13px">Current Given</p>
-                            <h2 id="countGiven">0</h2>
-                            <p class="small">Number of rewards / points marked as <strong>Given!</strong></p>
-                        </div>
-
-                        <div class="stat">
-                            <p style="margin:0;color:var(--muted);font-size:13px">Waiting</p>
-                            <h2 id="countWaiting">0</h2>
-                            <p class="small">How many are currently <strong>Waiting</strong></p>
-                        </div>
-                        <div class="stat">
-                            <p style="margin:0;color:var(--muted);font-size:13px">Estimated total</p>
-                            <h2 id="countEstimate">0</h2>
-                            <p class="small">Given + Waiting (estimate)</p>
-                        </div>
-                    </div>
-
-                    <div class="controls">
-                        <div class="left">
-                            <button id="addBtn">+ Add commendation</button>
-                            <button id="exportBtn" class="ghost">Export JSON</button>
-                            <button id="importBtn" class="ghost">Import JSON</button>
-                        </div>
-                        <div class="right">
-                            <button id="logoutBtn" class="ghost">Log out</button>
-                        </div>
-                    </div>   
-                    
-                    <div class="log" id="log">
-                        <!-- header row -->
-                        <div class="log-row" style="font-weight:700;color:var(--muted);padding:10px;">
-                            <div>#</div>
-                            <div>Details</div>
-                            <div>Date</div>
-                            <div>Teacher</div>
-                            <div style="text-align:right">Actions</div>
-                        </div>
-                        <div id="rows"></div>
-                    </div>
-
-                    <footer>Saved locally in your browser. You can export a backup JSON file.</footer>
-                </div>
+        <footer>Saved locally in your browser. You can export a backup JSON file.</footer>
+      </div>
 
     </div>
   </div>
@@ -175,12 +170,12 @@
   <input id="fileInput" type="file" accept="application/json" style="display:none" />
 
   <script>
-    // Password
-    const PASSWROD = 'password';
+    // Password (single, fixed)
+    const PASSWORD = 'ashfordschool';
     const STORAGE_KEY = 'commendations_v1';
     const LOGGED_KEY = 'commendation_logged_in_v1';
 
-    // DOM REFS
+    // DOM refs
     const loginEl = document.getElementById('login');
     const dashboardEl = document.getElementById('dashboard');
     const loginBtn = document.getElementById('loginBtn');
@@ -206,27 +201,24 @@
     const importBtn = document.getElementById('importBtn');
     const fileInput = document.getElementById('fileInput');
 
-    // data time....
+    // data
     let commendations = [];
 
-    // helper help me please.....
-
+    // helpers
     function save(){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(commendations));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(commendations));
     }
-
     function load(){
       const raw = localStorage.getItem(STORAGE_KEY);
       if(raw){
         try{commendations = JSON.parse(raw) || [];}catch(e){commendations=[]}
       } else commendations = [];
     }
-
     function uid(){return 'c'+Math.random().toString(36).slice(2,9)}
 
     function render(){
-        // counts?
-        const given = commendations.filter(c=>c.status==='given').length;
+      // counts
+      const given = commendations.filter(c=>c.status==='given').length;
       const waiting = commendations.filter(c=>c.status==='waiting').length;
       countGiven.textContent = given;
       countWaiting.textContent = waiting;
@@ -253,7 +245,7 @@
 
     function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
 
-    // init time - do the things when the page loads
+    // init
     (function(){
       load();
       // auto-login if logged flag exists
@@ -268,7 +260,7 @@
     // login handlers
     loginBtn.addEventListener('click', ()=>{
       const val = pwdInput.value || '';
-      if(val === PASSWROD){
+      if(val === PASSWORD){
         localStorage.setItem(LOGGED_KEY, 'true');
         pwdInput.value = '';
         loginErr.style.display='none';
@@ -277,13 +269,13 @@
         loginErr.style.display='block';
       }
     });
-    showHint.addEventListener('click', ()=>{alert("Password: password");});
+    showHint.addEventListener('click', ()=>{alert("Password: ashfordschool");});
     pwdInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') loginBtn.click(); });
 
     function showDashboard(){ loginEl.style.display='none'; dashboardEl.style.display='block'; render(); }
     function showLogin(){ loginEl.style.display='block'; dashboardEl.style.display='none'; localStorage.removeItem(LOGGED_KEY); }
 
-    // add .... riwgheriuhqweiurhqwiue
+    // add
     addBtn.addEventListener('click', ()=>{
       mDate.value = new Date().toISOString().slice(0,10);
       mTeacher.value = '';
@@ -316,7 +308,7 @@
       }
     });
 
-    // logout - ohhhhh 
+    // logout
     logoutBtn.addEventListener('click', ()=>{ if(confirm('Log out and go back to login screen?')){ showLogin(); } });
 
     // export/import
@@ -347,6 +339,13 @@
 
     // small usability: click escape to close modal
     document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') modal.style.display='none'; });
+
+    // initial sample data if empty (optional)
+    if(commendations.length===0){
+      // add a small sample (comment out if you prefer blank)
+      //commendations.push({id:uid(),date:new Date().toISOString().slice(0,10),teacher:'Mrs. Smith',status:'given'});
+      //save();
+    }
 
   </script>
 </body>
